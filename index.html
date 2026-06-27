@@ -1,1 +1,168 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilib Haiti - Moto Taxi</title>
+
+<style>
+body{font-family:Arial;margin:0;background:#f4f4f4}
+.container{max-width:520px;margin:20px auto;background:#fff;padding:20px;border-radius:12px}
+h2{text-align:center}
+.tag{text-align:center;color:green;font-weight:bold}
+small{text-align:center;display:block;color:#666}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:black;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.card{
+background:#eee;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+}
+
+img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🚗 WILIB HAITI</h2>
+<div class="tag">Instant Moto Taxi System</div>
+<small>Cash • MonCash • NatCash</small>
+
+<hr>
+
+<!-- CLIENT BOOKING -->
+<h3>👤 Book a Ride</h3>
+
+<input id="cname" placeholder="Your Name">
+<input id="cphone" placeholder="Phone Number">
+
+<input id="pickup" placeholder="Pickup Location">
+<input id="dropoff" placeholder="Destination">
+
+<select id="payment">
+<option>Cash</option>
+<option>MonCash</option>
+<option>NatCash</option>
+</select>
+
+<button onclick="sendRide()">🚀 Request Moto</button>
+
+<hr>
+
+<!-- DRIVER SIGNUP -->
+<h3>👨‍✈️ Driver Signup</h3>
+
+<input id="dname" placeholder="Driver Name">
+<input id="dphone" placeholder="Driver Phone">
+<input id="dmoto" placeholder="Moto Type">
+<input id="dphoto" placeholder="Photo URL (image link)">
+
+<button onclick="registerDriver()">📸 Register Driver</button>
+
+<hr>
+
+<!-- DRIVER SAMPLE -->
+<h3>🟢 Driver Preview</h3>
+
+<div class="card">
+<img src="https://i.pravatar.cc/100">
+<p><b>Sample Driver</b></p>
+<p>🏍️ Moto Taxi</p>
+<p>🟢 Available</p>
+
+<button onclick="acceptRide()">✅ Accept</button>
+<button onclick="rejectRide()">❌ Reject</button>
+</div>
+
+</div>
+
+<script>
+
+const BOT_TOKEN = "YOUR_BOT_TOKEN";
+const CHAT_ID = "YOUR_CHAT_ID";
+
+/* SEND TO TELEGRAM */
+function send(msg){
+fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id:CHAT_ID,
+text:msg
+})
+});
+}
+
+/* CLIENT RIDE */
+function sendRide(){
+let msg = `
+🚨 WILIB RIDE REQUEST
+
+👤 Name: ${cname.value}
+📞 Phone: ${cphone.value}
+
+📍 Pickup: ${pickup.value}
+📍 Dropoff: ${dropoff.value}
+
+💰 Payment: ${payment.value}
+`;
+
+send(msg);
+alert("Ride sent!");
+}
+
+/* DRIVER REGISTER */
+function registerDriver(){
+let msg = `
+👨‍✈️ NEW DRIVER
+
+Name: ${dname.value}
+Phone: ${dphone.value}
+Moto: ${dmoto.value}
+Photo: ${dphoto.value}
+
+Status: ONLINE
+`;
+
+send(msg);
+alert("Driver registered!");
+}
+
+/* ACCEPT / REJECT */
+function acceptRide(){
+send("✅ DRIVER ACCEPTED RIDE");
+alert("Accepted");
+}
+
+function rejectRide(){
+send("❌ DRIVER REJECTED RIDE");
+alert("Rejected");
+}
+
+</script>
+
+</body>
+</html>
